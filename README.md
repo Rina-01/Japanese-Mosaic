@@ -9,7 +9,7 @@ This program is made to solve japanese mosaic
 
 ## Программа
 - JapaneseMosaic - класс, решающий задание
-- read_task - скрипт, считывающий задание из файла
+- JMFilePrepare - класс, считывающий задание из файла (основа - read_task)
 
 ## Задания
 '10-15 1.txt' - отладочный (есть решение)
