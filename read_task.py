@@ -23,6 +23,7 @@ task = []
 
 for line in task_file:
     task_line = []
+    task_line.append(-1)
     for i in range(len(line)):
         if line[i] == ' ':
             task_line.append(-1)
@@ -34,18 +35,24 @@ for line in task_file:
             print('Неправильный символ в файле')
             task_file.close()
             exit()
+    task_line.append(-1)
     task.append(task_line)
 
 task_file.close()
 
 task
 
+m = len(task[0])
 
 j = 0
 for row in task:
     print(j+1, len(row))
     j = j + 1
 
+
+task = [ [-1] * m ] + task
+
+task.append( [-1] * m )
 
 tnptask = np.array(task, dtype=int)
 tnptask
