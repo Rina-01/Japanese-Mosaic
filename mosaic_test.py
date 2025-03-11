@@ -32,3 +32,14 @@ ss = 34
 res = divmod(ss, 10)
 res
 a,b = divmod(ss, 10)
+
+
+
+t1 = JapaneseMosaic()
+t1.task_load(dir_name + "\\task_files\\" + file_name + ".npy")
+t1.run()
+
+t1.task
+
+t1.print()
+

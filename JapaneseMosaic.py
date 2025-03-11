@@ -41,6 +41,13 @@ class JapaneseMosaic():
             print(s)
         print(chr(9492) + chr(9472) * (self.m - 2) + chr(9496))
     
+    def full(self):
+        for i in range(1, self.n - 1):
+            for j in range(1, self.m - 1):
+                if self.task[i][j] > 0:
+                    return False
+        return True
+    
     
     def sum(self, i, j):
         if i*j == 0 or i == self.n-1 or j == self.m-1:
@@ -83,30 +90,31 @@ class JapaneseMosaic():
         
         if self.test_mode:
             self.print()
+            
+        fl = True
+        while fl:
+            fl = False
         
-        # обработка на число свободных клеток
-        for i in range(1, self.n - 1):
-            for j in range(1, self.m - 1):
-                if self.task[i][j] > 0:
-                    k, z = divmod(self.sum(i, j), 10)
-                    if k + z == 9:
-                        continue
-                    if z == self.task[i][j]:    # всё что должно быть закрашено уже закрашено
-                        self.fill(i, j, 10)
-                        self.task[i][j] = -self.task[i][j] -10
-                    if 9 - k == self.task[i][j]:    # всё что свободно должно быть закрашено
-                        self.fill(i, j, 1)
-                        self.task[i][j] = -self.task[i][j] -10
+            # обработка на число свободных клеток
+            for i in range(1, self.n - 1):
+                for j in range(1, self.m - 1):
+                    if self.task[i][j] > 0:
+                        k, z = divmod(self.sum(i, j), 10)
+                        if k + z == 9:
+                            continue
+                        if z == self.task[i][j]:    # всё что должно быть закрашено уже закрашено
+                            self.fill(i, j, 10)
+                            self.task[i][j] = -self.task[i][j] -10
+                            fl = True
+                        if 9 - k == self.task[i][j]:    # всё что свободно должно быть закрашено
+                            self.fill(i, j, 1)
+                            self.task[i][j] = -self.task[i][j] -10
+                            fl = True
+            
+            if self.test_mode:
+                self.print()
         
-        if self.test_mode:
-            self.print()
-        
-                        
-                    
-t10 = JapaneseMosaic()
-t10.task_load(dir_name + "\\task_files\\" + file_name + ".npy")
-t10.run()
-t10.task
-
-t10.print()
+        res = self.full()
+        if res:
+            return 'Задача успешно решена'
 
