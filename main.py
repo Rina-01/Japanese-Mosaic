@@ -21,5 +21,5 @@ print(a)
 if a != 'Успешно':
     exit()
 
-test.print()
-
+a = test.run()
+print(a)
