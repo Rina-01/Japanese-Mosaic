@@ -179,3 +179,12 @@ class JapaneseMosaic():
 
         return 'Решение не найдено'
 
+
+dir_name = r"C:\Users\irina.mashkova\Documents\GitHub\Japanese-Mosaic"
+file_name = 'test-sit 2'
+
+t1 = JapaneseMosaic(test_mode=False)
+t1.task_load(dir_name + "\\task_files\\" + file_name + ".npy")
+# print(t1.task)
+rr = t1.run()
+print(rr)
