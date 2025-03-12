@@ -1,8 +1,5 @@
 import numpy as np
 
-dir_name = r"C:\Users\irina.mashkova\Documents\GitHub\Japanese-Mosaic"
-file_name = '10-15 1'
-
 class JapaneseMosaic():
     def __init__(self, test_mode=True):
         # self.status = 'success'
@@ -142,6 +139,38 @@ class JapaneseMosaic():
                         self.sol[i-1][j-2] = self.sol[i][j-2] = self.sol[i+1][j-2] = 10
 
         # ситуация 2
+        for i in range(2, self.n - 2):
+            for j in range(2, self.m - 2):
+                if self.task[i][j] == 8 or self.task[i][j] == 7:
+                    if self.task[i][j] - 6 == self.task[i-2][j]:    # верх
+                        if self.test_mode:
+                            print(2, i, j, 1)
+                        self.sol[i][j-1] = self.sol[i][j] = self.sol[i][j+1] = 1
+                        self.sol[i+1][j-1] = self.sol[i+1][j] = self.sol[i+1][j+1] = 1
+                        self.sol[i-3][j-1] = self.sol[i-3][j] = self.sol[i-3][j+1] = 10
+                        self.sol[i-2][j-1] = self.sol[i-2][j] = self.sol[i-2][j+1] = 10
+                    if self.task[i][j] - 6 == self.task[i+2][j]:    # низ
+                        if self.test_mode:
+                            print(2, i, j, 2)
+                        self.sol[i-1][j-1] = self.sol[i-1][j] = self.sol[i-1][j+1] = 1
+                        self.sol[i][j-1] = self.sol[i][j] = self.sol[i][j+1] = 1
+                        self.sol[i+2][j-1] = self.sol[i+2][j] = self.sol[i+2][j+1] = 10
+                        self.sol[i+3][j-1] = self.sol[i+3][j] = self.sol[i+3][j+1] = 10
+                    if self.task[i][j] - 6 == self.task[i][j+2]:    # право
+                        if self.test_mode:
+                            print(2, i, j, 3)
+                        self.sol[i-1][j-1] = self.sol[i][j-1] = self.sol[i+1][j-1] = 1
+                        self.sol[i-1][j] = self.sol[i][j] = self.sol[i+1][j] = 1
+                        self.sol[i-1][j+2] = self.sol[i][j+2] = self.sol[i+1][j+2] = 10
+                        self.sol[i-1][j+3] = self.sol[i][j+3] = self.sol[i+1][j+3] = 10
+                    if self.task[i][j] - 6 == self.task[i][j-2]:    # лево
+                        if self.test_mode:
+                            print(2, i, j, 4)
+                        self.sol[i-1][j+1] = self.sol[i][j+1] = self.sol[i+1][j+1] = 1
+                        self.sol[i-1][j] = self.sol[i][j] = self.sol[i+1][j] = 1
+                        self.sol[i-1][j-2] = self.sol[i][j-2] = self.sol[i+1][j-2] = 10
+                        self.sol[i-1][j-3] = self.sol[i][j-3] = self.sol[i+1][j-3] = 10
+
         
     def run(self):
         # первичная обработка
@@ -178,4 +207,3 @@ class JapaneseMosaic():
             return 'Задача успешно решена'
 
         return 'Решение не найдено'
-
