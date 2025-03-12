@@ -43,10 +43,10 @@ class JMFilePrepare():
         
         for line in self.task_file:
             task_line = []
-            task_line.append(-1)
+            task_line.append(-5)
             for i in range(len(line)):
                 if line[i] == ' ':
-                    task_line.append(-1)
+                    task_line.append(-5)
                 elif line[i] in CHAR_NUMS:
                     task_line.append(int(line[i]))
                 elif line[i] == '\n':
@@ -55,7 +55,7 @@ class JMFilePrepare():
                     self.status = 'Неправильный символ в файле'
                     self.task_file.close()
                     exit()
-            task_line.append(-1)
+            task_line.append(-5)
             self.task.append(task_line)
         
         self.validation()
@@ -63,8 +63,8 @@ class JMFilePrepare():
             return
         
         m = len(self.task[0])        
-        self.task = [ [-1] * m ] + self.task
-        self.task.append( [-1] * m )
+        self.task = [ [-5] * m ] + self.task
+        self.task.append( [-5] * m )
         
         self.save()
         if self.status != 'success':
