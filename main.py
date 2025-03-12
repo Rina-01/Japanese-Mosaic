@@ -1,3 +1,5 @@
+import numpy as np
+
 from JMFilePrepare import JMFilePrepare
 from JapaneseMosaic import JapaneseMosaic
 
@@ -5,7 +7,7 @@ from JapaneseMosaic import JapaneseMosaic
 dir_name = r"C:\Users\irina.mashkova\Documents\GitHub\Japanese-Mosaic"
 
 # file_name = input("Введите имя файла: ")
-file_name = 'test-sit 2'
+file_name = '10-15 1'
 
 
 my_file = JMFilePrepare(dir_name, file_name)
@@ -16,6 +18,8 @@ test = JapaneseMosaic()
 a = test.task_load(dir_name + "\\task_files\\" + file_name + ".npy")
 print(a)
 
-if a == 'Успешно':
-    a = test.run()
-    print(a)
+if a != 'Успешно':
+    exit()
+
+a = test.run()
+print(a)
