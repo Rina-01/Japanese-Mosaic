@@ -206,6 +206,81 @@ class JapaneseMosaic():
                         self.sol[i+2][j-1] = self.sol[i+2][j] = 10
                     
         # ситуация 4
+        for i in range(2, self.n - 2):
+            for j in range(2, self.m - 2):
+                if self.task[i][j] == 8:
+                    if self.task[i-2][j+1] == 1:    # 1
+                        if self.test_mode:
+                            print(4, i, j, 1)
+                        self.sol[i-1][j-1] = 1
+                        self.sol[i][j-1] = self.sol[i][j] = self.sol[i][j+1] = 1
+                        self.sol[i+1][j-1] = self.sol[i+1][j] = self.sol[i+1][j+1] = 1
+                        self.sol[i-3][j] = self.sol[i-3][j+1] = self.sol[i-3][j+2] = 10
+                        self.sol[i-2][j] = self.sol[i-2][j+1] = self.sol[i-2][j+2] = 10
+                        self.sol[i-1][j+2] = 10
+                    if self.task[i-1][j+2] == 1:    # 2
+                        if self.test_mode:
+                            print(4, i, j, 2)
+                        self.sol[i-1][j-1] = self.sol[i][j-1] = self.sol[i+1][j-1] = 1
+                        self.sol[i-1][j] = self.sol[i][j] = self.sol[i+1][j] = 1
+                        self.sol[i+1][j+1] = 1
+                        self.sol[i-2][j+1] = 10
+                        self.sol[i][j+2] = self.sol[i-1][j+2] = self.sol[i-2][j+2] = 10
+                        self.sol[i][j+3] = self.sol[i-1][j+3] = self.sol[i-2][j+3] = 10
+                    if self.task[i+1][j+2] == 1:    # 3
+                        if self.test_mode:
+                            print(4, i, j, 3)
+                        self.sol[i-1][j-1] = self.sol[i][j-1] = self.sol[i+1][j-1] = 1
+                        self.sol[i-1][j] = self.sol[i][j] = self.sol[i+1][j] = 1
+                        self.sol[i-1][j+1] = 1
+                        self.sol[i+2][j+1] = 10
+                        self.sol[i][j+2] = self.sol[i+1][j+2] = self.sol[i+2][j+2] = 10
+                        self.sol[i][j+3] = self.sol[i+1][j+3] = self.sol[i+2][j+3] = 10
+                    if self.task[i+2][j+1] == 1:    # 4
+                        if self.test_mode:
+                            print(4, i, j, 4)
+                        self.sol[i-1][j-1] = self.sol[i-1][j] = self.sol[i-1][j+1] = 1
+                        self.sol[i][j-1] = self.sol[i][j] = self.sol[i][j+1] = 1
+                        self.sol[i+1][j-1] = 1
+                        self.sol[i+1][j+2] = 10
+                        self.sol[i+2][j] = self.sol[i+2][j+1] = self.sol[i+2][j+2] = 10
+                        self.sol[i+3][j] = self.sol[i+3][j+1] = self.sol[i+3][j+2] = 10
+                    if self.task[i+2][j-1] == 1:    # 5
+                        if self.test_mode:
+                            print(4, i, j, 5)
+                        self.sol[i-1][j-1] = self.sol[i-1][j] = self.sol[i-1][j+1] = 1
+                        self.sol[i][j-1] = self.sol[i][j] = self.sol[i][j+1] = 1
+                        self.sol[i+1][j+1] = 1
+                        self.sol[i+1][j-1] = 10
+                        self.sol[i+2][j-1] = self.sol[i+2][j] = self.sol[i+2][j+1] = 10
+                        self.sol[i+3][j-1] = self.sol[i+3][j] = self.sol[i+3][j+1] = 10
+                    if self.task[i+1][j-2] == 1:    # 6
+                        if self.test_mode:
+                            print(4, i, j, 6)
+                        self.sol[i-1][j+1] = self.sol[i][j+1] = self.sol[i+1][j+1] = 1
+                        self.sol[i-1][j] = self.sol[i][j] = self.sol[i+1][j] = 1
+                        self.sol[i-1][j-1] = 1
+                        self.sol[i+2][j-1] = 10
+                        self.sol[i+2][j-2] = self.sol[i+1][j-2] = self.sol[i][j-2] = 10
+                        self.sol[i+2][j-3] = self.sol[i+1][j-3] = self.sol[i][j-3] = 10
+                    if self.task[i-1][j-2] == 1:    # 7
+                        if self.test_mode:
+                            print(4, i, j, 7)
+                        self.sol[i-1][j+1] = self.sol[i][j+1] = self.sol[i+1][j+1] = 1
+                        self.sol[i-1][j] = self.sol[i][j] = self.sol[i+1][j] = 1
+                        self.sol[i+1][j-1] = 1
+                        self.sol[i-2][j-1] = 10
+                        self.sol[i-2][j-2] = self.sol[i-1][j-2] = self.sol[i][j-2] = 10
+                        self.sol[i-2][j-3] = self.sol[i-1][j-3] = self.sol[i][j-3] = 10
+                    if self.task[i-2][j-1] == 1:    # 8
+                        if self.test_mode:
+                            print(4, i, j, 8)
+                        self.sol[i][j-1] = self.sol[i][j] = self.sol[i][j+1] = 1
+                        self.sol[i+1][j-1] = self.sol[i+1][j] = self.sol[i+1][j+1] = 1
+                        self.sol[i-1][j+1] = 1
+                        self.sol[i-1][j-2] = 10
+                        self.sol[i-3][j] = self.sol[i-3][j-1] = self.sol[i-3][j-2] = 10
+                        self.sol[i-2][j] = self.sol[i-2][j-1] = self.sol[i-2][j-2] = 10
         
     def run(self):
         # первичная обработка
@@ -242,3 +317,4 @@ class JapaneseMosaic():
             return 'Задача успешно решена'
 
         return 'Решение не найдено'
+

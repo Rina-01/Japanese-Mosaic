@@ -24,6 +24,12 @@ res
 a,b = divmod(ss, 10)
 
 
+for a in (False, True):
+    for b in (False, True):
+        print(int(a), int(b), int(a and not(b)))
+
+
+
 import numpy as np
 from JapaneseMosaic import JapaneseMosaic
 
@@ -32,7 +38,7 @@ file_name = '10-15 1'
 
 test = JapaneseMosaic()
 test.task_load(dir_name + "\\task_files\\" + file_name + ".npy")
-test.print()
+test.printsol()
 
 
 
@@ -221,5 +227,4 @@ for i in range(1, n - 1):
 
 if fl:
     printsol()
-
 
