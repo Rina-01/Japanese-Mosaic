@@ -100,7 +100,7 @@ class JapaneseMosaic():
         if self.sol[i+1][j+1] == 0:
             self.sol[i+1][j+1] = c
 
-        
+    
     def run_init(self): 
         # обработка 0 и 9
         for i in range(2, self.n - 2):
@@ -112,7 +112,8 @@ class JapaneseMosaic():
                     self.fill(i, j, 1)
                     self.task[i][j] = - self.task[i][j] - 10
         
-        # обработка на различные ситуации
+        # обработка различных ситуации
+        
         # ситуация 1
         for i in range(1, self.n - 1):
             for j in range(1, self.m - 1):
@@ -171,6 +172,40 @@ class JapaneseMosaic():
                         self.sol[i-1][j-2] = self.sol[i][j-2] = self.sol[i+1][j-2] = 10
                         self.sol[i-1][j-3] = self.sol[i][j-3] = self.sol[i+1][j-3] = 10
 
+        # ситуация 3
+        for i in range(2, self.n - 2):
+            for j in range(2, self.m - 2):
+                if self.task[i][j] > 0:
+                    if self.task[i][j] - 5 == self.task[i-1][j+1]:    # право верх
+                        if self.test_mode:
+                            print(3, i, j, 1)
+                        self.sol[i+1][j-1] = self.sol[i+1][j] = self.sol[i+1][j+1] = 1
+                        self.sol[i][j-1] = self.sol[i-1][j-1] = 1
+                        self.sol[i-2][j] = self.sol[i-2][j+1] = self.sol[i-2][j+2] = 10
+                        self.sol[i-1][j+2] = self.sol[i][j+2] = 10
+                    if self.task[i][j] - 5 == self.task[i+1][j+1]:    # право низ
+                        if self.test_mode:
+                            print(3, i, j, 2)
+                        self.sol[i-1][j-1] = self.sol[i-1][j] = self.sol[i-1][j+1] = 1
+                        self.sol[i][j-1] = self.sol[i+1][j-1] = 1
+                        self.sol[i+2][j] = self.sol[i+2][j+1] = self.sol[i+2][j+2] = 10
+                        self.sol[i+1][j+2] = self.sol[i][j+2] = 10
+                    if self.task[i][j] - 5 == self.task[i-1][j-1]:    # лево верх
+                        if self.test_mode:
+                            print(3, i, j, 3)
+                        self.sol[i-1][j+1] = self.sol[i][j+1] = self.sol[i+1][j+1] = 1
+                        self.sol[i+1][j-1] = self.sol[i+1][j] = 1
+                        self.sol[i][j-2] = self.sol[i-1][j-2] = self.sol[i-2][j-2] = 10
+                        self.sol[i-2][j-1] = self.sol[i-2][j] = 10
+                    if self.task[i][j] - 5 == self.task[i+1][j-1]:    # лево низ
+                        if self.test_mode:
+                            print(4, i, j, 4)
+                        self.sol[i-1][j+1] = self.sol[i][j+1] = self.sol[i+1][j+1] = 1
+                        self.sol[i-1][j-1] = self.sol[i-1][j] = 1
+                        self.sol[i][j-2] = self.sol[i+1][j-2] = self.sol[i+2][j-2] = 10
+                        self.sol[i+2][j-1] = self.sol[i+2][j] = 10
+                    
+        # ситуация 4
         
     def run(self):
         # первичная обработка
@@ -197,10 +232,10 @@ class JapaneseMosaic():
                             self.task[i][j] = - self.task[i][j] - 10
                             fl = True
 
+            fl = fl and not(self.full())
+            
             if fl and self.test_mode:
                 self.printst()
-        
-        self.printsol()
         
         res = self.full()
         if res:

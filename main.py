@@ -5,7 +5,7 @@ from JapaneseMosaic import JapaneseMosaic
 dir_name = r"C:\Users\irina.mashkova\Documents\GitHub\Japanese-Mosaic"
 
 # file_name = input("Введите имя файла: ")
-file_name = 'test-sit 2'
+file_name = 'test-sit 3'
 
 
 my_file = JMFilePrepare(dir_name, file_name)
@@ -19,3 +19,4 @@ print(a)
 if a == 'Успешно':
     a = test.run()
     print(a)
+    test.printsol()
