@@ -1,70 +1,125 @@
 import numpy as np
 
+
+# символы для отображения матриц
+FULL = chr(9608)
+KREST = chr(9587)
+NOTHING = ' '
+
+# символы для отображения границ
+HOR = chr(9472)
+VER = chr(9474)
+RHA = chr(9488)
+RLA = chr(9496)
+LLA = chr(9492)
+LHA = chr(9484)
+
+DEL = '     '
+
+
 class JapaneseMosaic():
     def __init__(self, test_mode=True):
         # self.status = 'success'
         self.test_mode = test_mode
+        self.n = 0
+        self.m = 0
 
+    
+    def sol_load(self, file_name):
+        try:
+            self.sol = np.load(file_name)
+        except:
+            return 'Ошибка при открытии файла'
+        
+        if self.n == 0:
+            self.n = len(self.sol)
+            self.m = len(self.sol[0])
+        else:
+            if self.n != len(self.sol) or self.m != len(self.sol[0]):
+                self.sol_init()
+                self.run_init()
+                return 'Ошибка, размеры матриц не совпадают'
+        
+        return 'Успешно'
     
     def task_load(self, file_name):
         try:
             self.task = np.load(file_name)
         except:
             return 'Ошибка при открытии файла'
-            
-        self.n = len(self.task)
-        self.m = len(self.task[0])
         
+        if self.n == 0:
+            self.n = len(self.task)
+            self.m = len(self.task[0])
+            self.sol_init()
+            self.run_init()
+        else:
+            if self.n != len(self.sol) or self.m != len(self.sol[0]):
+                return 'Ошибка, размеры матриц не совпадают'
+                
+        return 'Успешно'
+
+    def sol_init(self):
         self.sol = np.zeros((self.n, self.m), int)
         for i in range(self.n):
             self.sol[i][0] = self.sol[i][self.m-1] = 10
         
         for j in range(self.m):
             self.sol[0][j] = self.sol[self.n-1][j] = 10
-        
-        return 'Успешно'
+    
+    
+    def save(self, file_name):
+        try:
+            np.save(file_name, self.sol)
+        except FileNotFoundError:
+            return 'Путь для сохраенния файла не найден'
+        except:
+            return 'Ошибка при сохранении файла'
+        return 'Решение сохранено'
+
     
     def printsol(self):                 # print sol 
-        print(chr(9484) + chr(9472) * (self.m - 2) + chr(9488))
+        print(LHA + HOR * (self.m - 2) + RHA)
         for i in range(1, self.n-1):
-            s = chr(9474)
+            s = VER
             for j in range(1, self.m-1):
-                if self.sol[i][j] == 1:         # закрашенное
-                    s += chr(9608)
-                elif self.sol[i][j] == 10:      # крест
-                    s += chr(9587)
+                if self.sol[i][j] == 1:
+                    s += FULL
+                elif self.sol[i][j] == 10:
+                    s += KREST
                 else:
-                    s += ' '
-            s += chr(9474)
+                    s += NOTHING
+            s += VER
             print(s)
-        print(chr(9492) + chr(9472) * (self.m - 2) + chr(9496))
+        print(LLA + HOR * (self.m - 2) + RLA)
     
-    def printst(self):                  # print sol + task
-        print(chr(9484) + chr(9472) * (self.m - 2) + chr(9488)  + '     ' + chr(9484) + chr(9472) * (self.m - 2) + chr(9488))
+    def printst(self):                  # print sol + task 
+        print(LHA + HOR * (self.m - 2) + RHA  + DEL + LHA + HOR * (self.m - 2) + RHA)
         for i in range(1, self.n-1):
-            s = chr(9474)
+            s = VER
             for j in range(1, self.m-1):
-                if self.sol[i][j] == 1:         # закрашенное
-                    s += chr(9608)
-                elif self.sol[i][j] == 10:      # крест
-                    s += chr(9587)
-                else:                           # 
-                    s += ' '
-            s += chr(9474)
+                if self.sol[i][j] == 1:
+                    s += FULL
+                elif self.sol[i][j] == 10:
+                    s += KREST
+                else:
+                    s += NOTHING
+            s += VER
         
-            s += '     ' 
-            s += chr(9474)
+            s += DEL
+            
+            s += VER
             for j in range(1, self.m-1):
                 if self.task[i][j] == -5:       # ничего нет
-                    s += '_'
+                    s += NOTHING
                 elif self.task[i][j] > 0:       # число
                     s += str(self.task[i][j])
                 else:                           # было число
                     s += str(- self.task[i][j] - 10)
-            s += chr(9474)
+            s += VER
             print(s)
-        print(chr(9492) + chr(9472) * (self.m - 2) + chr(9496) + '     ' + chr(9492) + chr(9472) * (self.m - 2) + chr(9496))
-        
+        print(LLA + HOR * (self.m - 2) + RLA + DEL + LLA + HOR * (self.m - 2) + RLA)
+    
     
     def full(self):
         for i in range(1, self.n - 1):
@@ -101,7 +156,7 @@ class JapaneseMosaic():
             self.sol[i+1][j+1] = c
 
     
-    def run_init(self): 
+    def run_init(self):                 # первичная обработка 
         # обработка 0 и 9
         for i in range(2, self.n - 2):
             for j in range(2, self.m - 2):
@@ -282,10 +337,7 @@ class JapaneseMosaic():
                         self.sol[i-3][j] = self.sol[i-3][j-1] = self.sol[i-3][j-2] = 10
                         self.sol[i-2][j] = self.sol[i-2][j-1] = self.sol[i-2][j-2] = 10
         
-    def run(self):
-        # первичная обработка
-        self.run_init()
-        
+    def run(self):                      # основной алгоритм 
         fl = True
         while fl:
             fl = False
