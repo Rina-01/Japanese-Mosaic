@@ -19,10 +19,11 @@ DEL = '     '
 
 class JapaneseMosaic():
     def __init__(self, test_mode=True):
-        # self.status = 'success'
-        self.test_mode = test_mode
         self.n = 0
         self.m = 0
+        self.test_mode = test_mode
+        self.i = 0
+        self.j = 0
 
     
     def sol_load(self, file_name):
@@ -67,6 +68,15 @@ class JapaneseMosaic():
         for j in range(self.m):
             self.sol[0][j] = self.sol[self.n-1][j] = 10
     
+    
+    def hand_init(self, task, solution, ni, nj):
+        self.task = task
+        self.sol = solution.copy()
+        self.n = len(self.task)
+        self.m = len(self.task[0])
+        self.i = ni
+        self.j = nj
+        
     
     def save(self, file_name):
         try:
@@ -124,9 +134,19 @@ class JapaneseMosaic():
     def full(self):
         for i in range(1, self.n - 1):
             for j in range(1, self.m - 1):
-                if self.task[i][j] > 0:
+                if self.sol[i][j] == 0:
                     return False
         return True
+    
+    def empty(self):
+        if self.full():
+            return (0, 0)
+            
+        for i in range(1, self.n - 1):
+            for j in range(1, self.m - 1):
+                if self.sol[i][j] == 0:
+                    return (i, j)
+        
        
     def sum(self, i, j):
         if i*j == 0 or i == self.n-1 or j == self.m-1:
@@ -155,6 +175,15 @@ class JapaneseMosaic():
         if self.sol[i+1][j+1] == 0:
             self.sol[i+1][j+1] = c
 
+    def check(self):
+        for i in range(1, self.n - 1):
+            for j in range(1, self.m - 1):
+                if self.task[i][j] > 0:
+                    k, z = divmod(self.sum(i, j), 10)
+                    if z > self.task[i][j] or 9 - k < self.task[i][j]:
+                        return (i, j)
+        return (0, 0)
+        
     
     def run_init(self):                 # первичная обработка 
         # обработка 0 и 9
@@ -162,10 +191,10 @@ class JapaneseMosaic():
             for j in range(2, self.m - 2):
                 if self.task[i][j] == 0:
                     self.fill(i, j, 10)
-                    self.task[i][j] = - self.task[i][j] - 10
+                    # self.task[i][j] = - self.task[i][j] - 10
                 if self.task[i][j] == 9:
                     self.fill(i, j, 1)
-                    self.task[i][j] = - self.task[i][j] - 10
+                    # self.task[i][j] = - self.task[i][j] - 10
         
         # обработка различных ситуации
         
@@ -348,25 +377,21 @@ class JapaneseMosaic():
                     if self.task[i][j] > 0:
                         k, z = divmod(self.sum(i, j), 10)
                         if k + z == 9:                  # все клетки обработаны
-                            self.task[i][j] = - self.task[i][j] - 10
+                            # self.task[i][j] = - self.task[i][j] - 10
                             continue
                         if z == self.task[i][j]:        # всё что должно быть закрашено уже закрашено
                             self.fill(i, j, 10)
-                            self.task[i][j] = - self.task[i][j] - 10
+                            # self.task[i][j] = - self.task[i][j] - 10
                             fl = True
                         if 9 - k == self.task[i][j]:    # всё что свободно должно быть закрашено
                             self.fill(i, j, 1)
-                            self.task[i][j] = - self.task[i][j] - 10
+                            # self.task[i][j] = - self.task[i][j] - 10
                             fl = True
 
-            fl = fl and not(self.full())
-            
-            if fl and self.test_mode:
+            if fl and not(self.full()) and self.test_mode:
                 self.printst()
         
-        res = self.full()
-        if res:
+        if self.full() and self.check():
             return 'Задача успешно решена'
-
+        
         return 'Решение не найдено'
-
