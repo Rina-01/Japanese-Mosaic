@@ -42,6 +42,36 @@ test.printsol()
 
 
 
+class Testt:
+    def __init__(self, num):
+        self.n = num
+
+    def run(self):
+        # print(self.n)
+        return self.n
+
+
+objs = []
+
+for i in range(5):
+    objs.append(Testt(i))
+
+
+for a in objs:
+    print(a.run())
+
+
+x = 0
+
+def increment_x():
+    global x
+    x += 1
+    print("Внутри функции:", x)
+
+increment_x()
+print("Вне функции:", x)  # Теперь x равен 1
+
+
 
 import numpy as np
 dir_name = r"C:\Users\irina.mashkova\Documents\GitHub\Japanese-Mosaic"
