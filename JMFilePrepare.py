@@ -7,7 +7,7 @@ class JMFilePrepare():
         self.dir = dir_name
         self.fn = file_name
         self.task = []
-        self.status = 'success'
+        self.status = 'Успешно'
     
     def print(self):
         for row in self.task:
@@ -38,7 +38,7 @@ class JMFilePrepare():
     
     def run(self):
         self.open()
-        if self.status != 'success':
+        if self.status != 'Успешно':
             return
         
         for line in self.task_file:
@@ -59,7 +59,7 @@ class JMFilePrepare():
             self.task.append(task_line)
         
         self.validation()
-        if self.status != 'success':
+        if self.status != 'Успешно':
             return
         
         m = len(self.task[0])        
@@ -67,8 +67,5 @@ class JMFilePrepare():
         self.task.append( [-5] * m )
         
         self.save()
-        if self.status != 'success':
-            return
-        
-        return 'Файл обработан успешно'
+        return self.status
 
