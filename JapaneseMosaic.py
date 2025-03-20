@@ -24,7 +24,7 @@ class JapaneseMosaic():
         self.test_mode = test_mode
         self.i = 0
         self.j = 0
-        self.c = 0
+        self.c = 10
         self.logs = log
 
     
