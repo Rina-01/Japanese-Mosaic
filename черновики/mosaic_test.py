@@ -72,6 +72,10 @@ increment_x()
 print("Вне функции:", x)  # Теперь x равен 1
 
 
+# Определяем абсолютный путь к текущему скрипту
+import os
+current_script_path = os.path.abspath(__file__)
+
 
 import numpy as np
 dir_name = r"C:\Users\irina.mashkova\Documents\GitHub\Japanese-Mosaic"

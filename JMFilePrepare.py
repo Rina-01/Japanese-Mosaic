@@ -39,7 +39,7 @@ class JMFilePrepare():
     def run(self):
         self.open()
         if self.status != 'Успешно':
-            return
+            return self.status
         
         for line in self.task_file:
             task_line = []
@@ -54,13 +54,13 @@ class JMFilePrepare():
                 else:
                     self.status = 'Неправильный символ в файле'
                     self.task_file.close()
-                    exit()
+                    return self.status
             task_line.append(-5)
             self.task.append(task_line)
         
         self.validation()
         if self.status != 'Успешно':
-            return
+            return self.status
         
         m = len(self.task[0])        
         self.task = [ [-5] * m ] + self.task
